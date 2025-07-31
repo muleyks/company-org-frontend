@@ -35,11 +35,30 @@ export default function ManagerLayout({ children }) {
             fontSize: 22,
             letterSpacing: 2,
             marginRight: 40,
+            marginLeft: "16px",
             cursor: "pointer",
+            display: "flex",
+            flexDirection: "column",
+            gap: "9px",
           }}
           onClick={() => setShowSidebar(true)}
         >
-          DELTA
+          <div
+            style={{
+              width: "30px",
+              height: "1.5px",
+              backgroundColor: "#fff",
+              borderRadius: "1px",
+            }}
+          />
+          <div
+            style={{
+              width: "30px",
+              height: "1.5px",
+              backgroundColor: "#fff",
+              borderRadius: "1px",
+            }}
+          />
         </div>
         <div
           style={{
@@ -103,92 +122,75 @@ export default function ManagerLayout({ children }) {
       </div>
       {/* Sidebar */}
       {showSidebar && (
-        <div
-          style={{
-            position: "fixed",
-            top: 60,
-            left: 0,
-            width: 220,
-            background: "#222",
-            color: "#fff",
-            height: "calc(100vh - 60px)",
-            zIndex: 2000,
-            display: "flex",
-            flexDirection: "column",
-            paddingTop: 0,
-            boxShadow: "2px 0 8px rgba(0,0,0,0.08)",
-            textAlign: "left",
-            transition: "left 0.3s",
-          }}
-        >
+        <>
+          {/* Overlay to close sidebar when clicked outside */}
           <div
             style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.5)",
+              zIndex: 1500,
+            }}
+            onClick={() => setShowSidebar(false)}
+          />
+          <div
+            style={{
+              position: "fixed",
+              top: 60,
+              left: 0,
+              width: 220,
+              background: "#222",
+              color: "#fff",
+              height: "calc(100vh - 60px)",
+              zIndex: 2000,
               display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "2px 8px 0 4px",
+              flexDirection: "column",
+              paddingTop: 16,
+              boxShadow: "2px 0 8px rgba(0,0,0,0.08)",
+              textAlign: "left",
+              transition: "left 0.3s",
             }}
           >
-            <span
+            {/* Şirketler ana başlık ve alt başlıklar */}
+            <div
               style={{
-                fontWeight: "bold",
-                fontSize: 20,
-                paddingLeft: 16,
-                textAlign: "left",
-              }}
-            >
-              {getTranslation(language, "menu")}
-            </span>
-            <button
-              style={{
-                background: "none",
-                border: "none",
-                color: "#fff",
-                fontSize: 22,
+                padding: "12px 16px",
                 cursor: "pointer",
+                fontSize: 20,
+                fontWeight: 400,
               }}
-              onClick={() => setShowSidebar(false)}
-              aria-label={getTranslation(language, "close")}
+              onClick={() => setShowCompaniesMenu((v) => !v)}
             >
-              ×
-            </button>
-          </div>
-          {/* Şirketler ana başlık ve alt başlıklar */}
-          <div
-            style={{
-              padding: "12px 16px",
-              cursor: "pointer",
-              fontSize: 20,
-              fontWeight: 400,
-            }}
-            onClick={() => setShowCompaniesMenu((v) => !v)}
-          >
-            {getTranslation(language, "companies")}
-          </div>
-          {showCompaniesMenu && (
-            <div style={{ paddingLeft: 16 }}>
-              <div
-                style={{
-                  padding: "8px 0",
-                  cursor: "pointer",
-                  fontSize: 18,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
-                onClick={() => {
-                  navigate("/manager/companies");
-                  setShowSidebar(false);
-                  setShowCompaniesMenu(false);
-                }}
-              >
-                <span style={{ fontSize: 16 }}>›</span>{" "}
-                {getTranslation(language, "companies")}
-              </div>
+              {getTranslation(language, "companies")}
             </div>
-          )}
-          {/* Diğer menü başlıkları */}
-        </div>
+            {showCompaniesMenu && (
+              <div style={{ paddingLeft: 16 }}>
+                <div
+                  style={{
+                    padding: "8px 0",
+                    cursor: "pointer",
+                    fontSize: 18,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                  onClick={() => {
+                    navigate("/manager/companies");
+                    setShowSidebar(false);
+                    setShowCompaniesMenu(false);
+                  }}
+                >
+                  <span style={{ fontSize: 16 }}>›</span>{" "}
+                  {getTranslation(language, "companies")}
+                </div>
+              </div>
+            )}
+            {/* Diğer menü başlıkları */}
+          </div>
+        </>
       )}
       <div style={{ paddingTop: 60 }}>{children}</div>
     </>

@@ -33,6 +33,7 @@ export default function UserLayout({ children }) {
             fontSize: 22,
             letterSpacing: 2,
             marginRight: 40,
+            marginLeft: "16px",
             cursor: "pointer",
           }}
           onClick={() => navigate("/user-dashboard")}
